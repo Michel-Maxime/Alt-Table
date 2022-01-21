@@ -22,6 +22,11 @@ app.get('/meals', (req, res) => {
     res.send("ok");
 });
 
+app.get('/menu', (req, res) => {
+    mealservice.getMenu()
+    res.send("ok");
+});
+
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
 });
