@@ -27,6 +27,12 @@ app.post('/meals', (req, res) => {
     res.send("ok");
 });
 
+
+app.get('/menu', (req, res) => {
+    mealservice.getMenu()
+    res.send("ok");
+});
+
 app.put('/meals/:id',(req,res)=>{
     mealservice.updateMeal(req.params.id,req.body.quantity)
     res.send("Meal Update")

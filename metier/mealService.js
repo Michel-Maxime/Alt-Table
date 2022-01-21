@@ -1,9 +1,9 @@
 class mealService {
-    constructor(repo){
+    constructor(repo) {
         this.repo = repo
     }
 
-    Test(){
+    Test() {
         console.log("mealService.Test() is called")
     }
 
@@ -18,6 +18,10 @@ class mealService {
 
     updateMeal(id,quantity){
         this.repo.updateOneMeal(id,quantity)
+    }
+
+    getMenu() {
+        this.repo.getMenu()
     }
 
 }

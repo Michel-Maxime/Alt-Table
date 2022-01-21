@@ -2,7 +2,14 @@ let Meal = require('../repository/models/mealSchema')
 //let serialize = require('../repository/serializer/serializer')
 
 class mongoRepository {
-    constructor(){}
+    constructor() { }
+
+
+    getMenu() {
+        console.log("isMenu")
+        Meal.find({}).where('quantity').gt(0).then(data => console.log(data))
+    }
+
 
     async getAllMeals(){
         let meals = {}
@@ -33,4 +40,4 @@ class mongoRepository {
                     }
                 })}}
 
-module.exports = {mongoRepository}
+module.exports = { mongoRepository }
