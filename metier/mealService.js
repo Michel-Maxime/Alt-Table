@@ -5,23 +5,22 @@ class mealService {
         this.repo = repo
     }
 
-    Test() {
-        console.log("mealService.Test() is called")
-    }
-
     async getMeals() {
         let meals = await this.repo.getAllMeals()
         return meals
     }
 
     async addMeal(newMeal){
-        let isExist = await this.repo.mealExist(newMeal.name)
-        console.log(isExist);
-        if(isExist){
-            console.log("pas possible, le plat existe déja")
-        }else{
-            this.repo.addOneMeal(newMeal)
+        // let isExist = 
+        // if(isExist){
+        //     return "pas possible, le plat existe déja"
+        // }else{
+        //     return await this.repo.addOneMeal(newMeal)
+        // }
+        if(await this.repo.mealExist(newMeal.name)){
+            return "pas possible, le plat existe déja"
         }
+        return await this.repo.addOneMeal(newMeal)
     }
 
     updateMeal(id, quantity) {
