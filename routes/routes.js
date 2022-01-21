@@ -1,13 +1,12 @@
 const {app,port} = require('../config/server')
 
-//const mongoose = require('../repository/mongoConnection') lance bien la connexion
-
 const {mongoRepository} = require('../repository/mongoRepository')
 const {mealService} = require('../metier/mealService')
 
 const mongorepository = new mongoRepository()
 
 const mealservice = new mealService(mongorepository)//mettre un repo
+
 
 app.get('/', (req, res) => {
     res.send("Hello world");
@@ -20,6 +19,12 @@ app.get('/test', (req, res) => {
 app.get('/meals', async (req, res) => {
     const meals = await mealservice.getMeals()
     res.json(meals);
+});
+
+app.post('/meals', (req, res) => {
+    mealservice.addMeal(req.body)
+    //console.log(req.body);
+    res.send("ok");
 });
 
 app.listen(port, () => {

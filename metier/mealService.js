@@ -12,6 +12,10 @@ class mealService {
         return meals
     }
 
+    addMeal(newMeal){
+        this.repo.addOneMeal(newMeal)
+    }
+
 }
 
 module.exports = {
