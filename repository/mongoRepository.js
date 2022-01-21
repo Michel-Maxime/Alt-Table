@@ -4,9 +4,10 @@ let serialize = require('../repository/serializer/serializer')
 class mongoRepository {
     constructor(){}
 
-    getAllMeals(){
-        console.log("is getAllMeals");
-        Meal.find({}).then(data => console.log(data))
+    async getAllMeals(){
+        let meals = {}
+        await Meal.find({}).then(data => meals = data)
+        return meals
     }
 }
 
