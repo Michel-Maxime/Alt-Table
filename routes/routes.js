@@ -2,35 +2,25 @@ const {app,port} = require('../config/server')
 
 const {mongoRepository} = require('../repository/mongoRepository')
 const {mealService} = require('../metier/mealService')
+const {mealController} = require('../controller/mealController')
+
 
 const mongorepository = new mongoRepository()
-
 const mealservice = new mealService(mongorepository)//mettre un repo
+const mealcontroller = new mealController(mealservice)
 
 
 app.get('/', (req, res) => {
     res.send("Hello world");
 });
 
-app.get('/test', (req, res) => {
-    res.send(mealservice.Test())
-});
+app.get('/meals',mealcontroller.getMeal);
 
-app.get('/meals', async (req, res) => {
-    const meals = await mealservice.getMeals()
-    res.json(meals);
-});
+app.get('/menu', mealcontroller.getMenu);
 
-app.post('/meals', async (req, res) => {
-    mealservice.addMeal(req.body)
-    //console.log(req.body);
-    res.send("ok");
-});
+app.post('/meals', mealcontroller.postMeal);
 
-app.get('/menu', async (req, res) => {
-    const menu = await mealservice.getMenu()
-    res.json(menu);
-});
+
 
 app.put('/meals/:id',(req,res)=>{
     mealservice.updateMeal(req.params.id,req.body.quantity)

@@ -1,9 +1,9 @@
+const { handle } = require('express/lib/application')
 let Meal = require('../repository/models/mealSchema')
 //let serialize = require('../repository/serializer/serializer')
 
 class mongoRepository {
     constructor() { }
-
 
     async getMenu() {
         let menu = {}
@@ -17,16 +17,27 @@ class mongoRepository {
         return meals
     }
 
-    addOneMeal(newMeal) {
+    async addOneMeal(newMeal) {
         const meal = new Meal({
             name: newMeal.name,
             description: newMeal.description,
             type: newMeal.type,
-            price: newMeal.price,
-            quantity: newMeal.quantity,
+            price: newMeal.price
         })
 
-        meal.save()
+        let error = null
+
+        await meal.save(function (err) {
+            if(err) error = err.name
+        })
+
+        console.log(error);
+
+        if(error != null){
+            return error
+        }
+        
+        return "meal successfully added"     
     }
 
     updateOneMeal(id, quantity) {
