@@ -11,9 +11,8 @@ class mongoRepository {
         return menu
     }
 
-
-    async getAllMeals() {
-        let meals = {}
+    async getAllMeals(){
+        let meals = []
         await Meal.find({}).then(data => meals = data)
         return meals
     }
@@ -39,7 +38,12 @@ class mongoRepository {
                 else {
                     console.log("Updated User : ", docs);
                 }
-            })
+            }
+        )        
+    }
+
+    async mealExist(name){
+        return await Meal.exists({name : name})
     }
 }
 

@@ -21,12 +21,11 @@ app.get('/meals', async (req, res) => {
     res.json(meals);
 });
 
-app.post('/meals', (req, res) => {
+app.post('/meals', async (req, res) => {
     mealservice.addMeal(req.body)
     //console.log(req.body);
     res.send("ok");
 });
-
 
 app.get('/menu', async (req, res) => {
     const menu = await mealservice.getMenu()
