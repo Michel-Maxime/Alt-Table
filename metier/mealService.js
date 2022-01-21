@@ -7,8 +7,9 @@ class mealService {
         console.log("mealService.Test() is called")
     }
 
-    getMeals(){
-        this.repo.getAllMeals()
+    async getMeals(){
+        let meals = await this.repo.getAllMeals()
+        return meals
     }
 
     addMeal(newMeal){

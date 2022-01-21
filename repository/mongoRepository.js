@@ -5,7 +5,9 @@ class mongoRepository {
     constructor(){}
 
     async getAllMeals(){
-        Meal.find({}).then(data => console.log(data))
+        let meals = {}
+        await Meal.find({}).then(data => meals = data)
+        return meals
     }
 
     addOneMeal(newMeal){
