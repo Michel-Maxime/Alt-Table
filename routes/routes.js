@@ -1,13 +1,12 @@
 const {app,port} = require('../config/server')
 
-//const mongoose = require('../repository/mongoConnection') lance bien la connexion
-
 const {mongoRepository} = require('../repository/mongoRepository')
 const {mealService} = require('../metier/mealService')
 
 const mongorepository = new mongoRepository()
 
 const mealservice = new mealService(mongorepository)//mettre un repo
+
 
 app.get('/', (req, res) => {
     res.send("Hello world");
@@ -17,15 +16,27 @@ app.get('/test', (req, res) => {
     res.send(mealservice.Test())
 });
 
-app.get('/meals', (req, res) => {
-    mealservice.getMeals()
+app.get('/meals', async (req, res) => {
+    const meals = await mealservice.getMeals()
+    res.json(meals);
+});
+
+app.post('/meals', (req, res) => {
+    mealservice.addMeal(req.body)
+    //console.log(req.body);
     res.send("ok");
 });
+
 
 app.get('/menu', (req, res) => {
     mealservice.getMenu()
     res.send("ok");
 });
+
+app.put('/meals/:id',(req,res)=>{
+    mealservice.updateMeal(req.params.id,req.body.quantity)
+    res.send("Meal Update")
+})
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
