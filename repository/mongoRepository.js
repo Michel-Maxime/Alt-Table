@@ -5,11 +5,11 @@ class mongoRepository {
     constructor() { }
 
 
-    getMenu() {
-        console.log("isMenu")
-        Meal.find({}).where('quantity').gt(0).then(data => console.log(data))
+    async getMenu() {
+        let menu = {}
+        await Meal.find({}).where('quantity').gt(0).then(data => menu = data)
+        return menu
     }
-
 
     async getAllMeals(){
         let meals = []
@@ -17,7 +17,7 @@ class mongoRepository {
         return meals
     }
 
-    addOneMeal(newMeal){
+    addOneMeal(newMeal) {
         const meal = new Meal({
             name: newMeal.name,
             description: newMeal.description,
@@ -26,16 +26,16 @@ class mongoRepository {
             quantity: newMeal.quantity,
         })
 
-        meal.save()     
+        meal.save()
     }
 
-    updateOneMeal(id,quantity){
-        Meal.findByIdAndUpdate(id, {$set:{quantity : quantity}}, {new: true,upsert: true},
+    updateOneMeal(id, quantity) {
+        Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true },
             function (err, docs) {
-                if (err){
+                if (err) {
                     console.log(err)
                 }
-                else{
+                else {
                     console.log("Updated User : ", docs);
                 }
             }
