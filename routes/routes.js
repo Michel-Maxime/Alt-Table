@@ -22,6 +22,11 @@ app.get('/meals', (req, res) => {
     res.send("ok");
 });
 
+app.put('/meals/:id',(req,res)=>{
+    mealservice.updateMeal(req.params.id,req.body.quantity)
+    res.send("Meal Update")
+})
+
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
 });

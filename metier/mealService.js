@@ -11,6 +11,10 @@ class mealService {
         this.repo.getAllMeals()
     }
 
+    updateMeal(id,quantity){
+        this.repo.updateOneMeal(id,quantity)
+    }
+
 }
 
 module.exports = {
