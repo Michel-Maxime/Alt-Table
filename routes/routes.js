@@ -28,9 +28,9 @@ app.post('/meals', (req, res) => {
 });
 
 
-app.get('/menu', (req, res) => {
-    mealservice.getMenu()
-    res.send("ok");
+app.get('/menu', async (req, res) => {
+    const menu = await mealservice.getMenu()
+    res.json(menu);
 });
 
 app.put('/meals/:id',(req,res)=>{
