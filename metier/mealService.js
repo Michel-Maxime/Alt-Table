@@ -11,6 +11,10 @@ class mealService {
         this.repo.getAllMeals()
     }
 
+    addMeal(newMeal){
+        this.repo.addOneMeal(newMeal)
+    }
+
 }
 
 module.exports = {
