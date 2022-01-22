@@ -9,4 +9,5 @@ class ResponseHandler {
     getMenusEmpty = () => "Il semble ne pas avoir de menus"
 }
 
+
 module.exports = new ResponseHandler()
