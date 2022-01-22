@@ -1,20 +1,23 @@
-const { handle } = require('express/lib/application')
 let Meal = require('../repository/models/mealSchema')
-//let serialize = require('../repository/serializer/serializer')
+const responseHandler = require('../response/responseHandler')
 
 class mongoRepository {
     constructor() { }
 
     async getMenu() {
-        let menu = {}
-        await Meal.find({}).where('quantity').gt(0).then(data => menu = data)
-        return menu
+        try {
+            return await Meal.find({}).where('quantity').gt(0)
+        }catch(err) {
+            return err.name
+        }
     }
 
     async getAllMeals(){
-        let meals = []
-        await Meal.find({}).then(data => meals = data)
-        return meals
+        try {
+            return await Meal.find({})
+        }catch(err) {
+            return err.name
+        }    
     }
 
     async addOneMeal(newMeal) {
@@ -27,44 +30,25 @@ class mongoRepository {
 
         try{
             await meal.save();
-            return "meal successfully added"
-        }
-        catch(err)
-        {
-            console.log('err', err.name);
+        }catch(err) {
             return err.name
         }
-             
+        
+        return responseHandler.postOk() 
     }
 
     async updateOneMeal(id, quantity) {
-        let error = null
-
-        Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true },
-            function (err, docs) {
-                if (err) {
-                    error = err.name
-                }
-                else {
-                    console.log("Updated User : ", docs);
-                }
-            }
-        ) 
-
-        if(error != null){
-            return error
+        try {  
+            await Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true })     
+        }catch(err) {
+            return err.name
         }
-        
-        return "meal successfully updated"   
+
+        return responseHandler.putOk()
     }
 
     async mealExist(name){
         return await Meal.exists({name : name})
-    }
-
-    async checkExist(){
-        let result = await Meal.findOne({ country: 'Croatia' }).exec();
-        console.log(result);
     }
 }
 
