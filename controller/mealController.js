@@ -27,8 +27,22 @@ class mealController {
 
     postMeal = async (req, res) => {
         let response = await this.service.addMeal(req.body)
-        //console.log(req.body);
-        res.send(response);
+        if(response == "meal successfully added"){
+            res.status(200).json(response);
+        }
+        else{
+            res.status(500).json(response);
+        }
+    }
+
+    updateMeal = async (req,res)=>{
+        let response = await this.service.updateMeal(req.params.id,req.body.quantity)
+        if(response == "meal successfully updated"){
+            res.status(200).json(response);
+        }
+        else{
+            res.status(500).json(response);
+        }
     }
 }
 

@@ -25,36 +25,46 @@ class mongoRepository {
             price: newMeal.price
         })
 
-        let error = null
-
-        await meal.save(function (err) {
-            if(err) error = err.name
-        })
-
-        console.log(error);
-
-        if(error != null){
-            return error
+        try{
+            await meal.save();
+            return "meal successfully added"
         }
-        
-        return "meal successfully added"     
+        catch(err)
+        {
+            console.log('err', err.name);
+            return err.name
+        }
+             
     }
 
-    updateOneMeal(id, quantity) {
+    async updateOneMeal(id, quantity) {
+        let error = null
+
         Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true },
             function (err, docs) {
                 if (err) {
-                    console.log(err)
+                    error = err.name
                 }
                 else {
                     console.log("Updated User : ", docs);
                 }
             }
-        )        
+        ) 
+
+        if(error != null){
+            return error
+        }
+        
+        return "meal successfully updated"   
     }
 
     async mealExist(name){
         return await Meal.exists({name : name})
+    }
+
+    async checkExist(){
+        let result = await Meal.findOne({ country: 'Croatia' }).exec();
+        console.log(result);
     }
 }
 

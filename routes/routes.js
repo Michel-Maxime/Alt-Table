@@ -20,12 +20,7 @@ app.get('/menu', mealcontroller.getMenu);
 
 app.post('/meals', mealcontroller.postMeal);
 
-
-
-app.put('/meals/:id',(req,res)=>{
-    mealservice.updateMeal(req.params.id,req.body.quantity)
-    res.send("Meal Update")
-})
+app.put('/meals/:id',mealcontroller.updateMeal)
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
