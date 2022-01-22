@@ -11,20 +11,15 @@ class mealService {
     }
 
     async addMeal(newMeal){
-        // let isExist = 
-        // if(isExist){
-        //     return "pas possible, le plat existe déja"
-        // }else{
-        //     return await this.repo.addOneMeal(newMeal)
-        // }
-        if(await this.repo.mealExist(newMeal.name)){
+        let isExist = await this.repo.mealExist(newMeal.name)
+        if(isExist){
             return "pas possible, le plat existe déja"
         }
         return await this.repo.addOneMeal(newMeal)
     }
 
-    updateMeal(id, quantity) {
-        this.repo.updateOneMeal(id, quantity)
+    async updateMeal(id, quantity) {
+        return await this.repo.updateOneMeal(id, quantity)
     }
 
     async getMenu() {

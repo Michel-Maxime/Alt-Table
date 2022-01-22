@@ -6,7 +6,7 @@ const {mealController} = require('../controller/mealController')
 
 
 const mongorepository = new mongoRepository()
-const mealservice = new mealService(mongorepository)//mettre un repo
+const mealservice = new mealService(mongorepository)
 const mealcontroller = new mealController(mealservice)
 
 
@@ -20,12 +20,7 @@ app.get('/menu', mealcontroller.getMenu);
 
 app.post('/meals', mealcontroller.postMeal);
 
-
-
-app.put('/meals/:id',(req,res)=>{
-    mealservice.updateMeal(req.params.id,req.body.quantity)
-    res.send("Meal Update")
-})
+app.put('/meals/:id',mealcontroller.updateMeal)
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
