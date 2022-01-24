@@ -18,7 +18,8 @@ app.get('/test', (req, res) => {
 
 app.get('/meals', async (req, res) => {
     const meals = await mealservice.getMeals()
-    res.json(meals);
+    //res.status(200).json(meals);
+    res.status(200).send("OK");
 });
 
 app.post('/meals', async (req, res) => {
