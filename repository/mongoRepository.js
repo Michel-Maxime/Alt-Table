@@ -1,6 +1,7 @@
 let Meal = require('../repository/models/mealSchema')
 const responseHandler = require('../response/responseHandler')
 const SeatingPlan = require('./models/seatingPlanSchema')
+const Service = require('./models/serviceSchema')
 
 class mongoRepository {
     constructor() { }
@@ -8,17 +9,17 @@ class mongoRepository {
     async getMenu() {
         try {
             return await Meal.find({}).where('quantity').gt(0)
-        }catch(err) {
+        } catch (err) {
             return err.name
         }
     }
 
-    async getAllMeals(){
+    async getAllMeals() {
         try {
             return await Meal.find({})
-        }catch(err) {
+        } catch (err) {
             return err.name
-        }    
+        }
     }
 
     async addOneMeal(newMeal) {
@@ -29,42 +30,49 @@ class mongoRepository {
             price: newMeal.price
         })
 
-        try{
+        try {
             await meal.save();
-        }catch(err) {
+        } catch (err) {
             return err.name
         }
-        
-        return responseHandler.postOk() 
+
+        return responseHandler.postOk()
     }
 
     async updateOneMeal(id, quantity) {
-        try {  
-            await Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true })     
-        }catch(err) {
+        try {
+            await Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true })
+        } catch (err) {
             return err.name
         }
 
         return responseHandler.patchOk()
     }
 
-    async mealExist(name){
-        return await Meal.exists({name : name})
+    async mealExist(name) {
+        return await Meal.exists({ name: name })
     }
 
-    async addOneSeatingPlan(newSeatingPlan){
+    async addOneSeatingPlan(newSeatingPlan) {
         const seatingPlan = new SeatingPlan({
             tableList: newSeatingPlan.tableList,
         })
-        try{
+        try {
             await seatingPlan.save()
             console.log(seatingPlan._id)
-            await SeatingPlan.updateMany({'_id':{$ne:seatingPlan._id}},{$set:{"seatingPlanStatus":false}})
-        }catch(err) {
+            await SeatingPlan.updateMany({ '_id': { $ne: seatingPlan._id } }, { $set: { "seatingPlanStatus": false } })
+        } catch (err) {
             return err.name
         }
-        
-        return responseHandler.postSeatingPlanOk() 
+
+        return responseHandler.postSeatingPlanOk()
+    }
+
+    async addOneService(newService) {
+        const service = new Service({
+            seatingPlanSchemaId: // récupérer l'id du plan de table dont le status est à true
+        })
+
     }
 }
 
