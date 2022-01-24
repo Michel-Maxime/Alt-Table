@@ -43,7 +43,7 @@ class mealController {
 
     updateMeal = async (req, res) => {
         let response = await this.service.updateMeal(req.params.id, req.body.quantity)
-        if (response == responseHandler.putOk()) {
+        if (response == responseHandler.patchOk()) {
             res.status(200).json(response);
         }
         else {

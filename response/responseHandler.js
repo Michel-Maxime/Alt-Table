@@ -2,7 +2,7 @@ class ResponseHandler {
 
     postOk = () => "meal successfully added"
 
-    putOk = () => "meal successfully updated"  
+    patchOk = () => "meal successfully updated"  
 
     getMealsEmpty = () => "Il semble ne pas avoir de plats"
 

@@ -44,7 +44,7 @@ class mongoRepository {
             return err.name
         }
 
-        return responseHandler.putOk()
+        return responseHandler.patchOk()
     }
 
     async mealExist(name){
