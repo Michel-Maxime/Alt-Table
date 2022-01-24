@@ -2,15 +2,17 @@ const { ObjectId, Double, Int32 } = require('mongodb')
 const mongoose = require('../mongoConnection')
 
 const MealSchema = mongoose.Schema({
-    _id: {
-        type: ObjectId,
-        default: new mongoose.Types.ObjectId(),
+    name: {
+        type: String,
+        required: true
     },
-    name: String,
     description: String,
     type: String,
     price: Number,
-    quantity: Number
+    quantity : {
+        type: Number,
+        default: 0
+    }
 }, {
     versionKey: false // You should be aware of the outcome after set to false
 })

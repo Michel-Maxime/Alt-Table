@@ -1,45 +1,50 @@
 let Meal = require('../repository/models/mealSchema')
-//let serialize = require('../repository/serializer/serializer')
+const responseHandler = require('../response/responseHandler')
 
 class mongoRepository {
     constructor() { }
 
-
     async getMenu() {
-        let menu = {}
-        await Meal.find({}).where('quantity').gt(0).then(data => menu = data)
-        return menu
+        try {
+            return await Meal.find({}).where('quantity').gt(0)
+        }catch(err) {
+            return err.name
+        }
     }
 
     async getAllMeals(){
-        let meals = []
-        await Meal.find({}).then(data => meals = data)
-        return meals
+        try {
+            return await Meal.find({})
+        }catch(err) {
+            return err.name
+        }    
     }
 
-    addOneMeal(newMeal) {
+    async addOneMeal(newMeal) {
         const meal = new Meal({
             name: newMeal.name,
             description: newMeal.description,
             type: newMeal.type,
-            price: newMeal.price,
-            quantity: newMeal.quantity,
+            price: newMeal.price
         })
 
-        meal.save()
+        try{
+            await meal.save();
+        }catch(err) {
+            return err.name
+        }
+        
+        return responseHandler.postOk() 
     }
 
-    updateOneMeal(id, quantity) {
-        Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true },
-            function (err, docs) {
-                if (err) {
-                    console.log(err)
-                }
-                else {
-                    console.log("Updated User : ", docs);
-                }
-            }
-        )        
+    async updateOneMeal(id, quantity) {
+        try {  
+            await Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true })     
+        }catch(err) {
+            return err.name
+        }
+
+        return responseHandler.putOk()
     }
 
     async mealExist(name){

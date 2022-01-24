@@ -2,41 +2,25 @@ const {app,port} = require('../config/server')
 
 const {mongoRepository} = require('../repository/mongoRepository')
 const {mealService} = require('../metier/mealService')
+const {mealController} = require('../controller/mealController')
+
 
 const mongorepository = new mongoRepository()
-
-const mealservice = new mealService(mongorepository)//mettre un repo
+const mealservice = new mealService(mongorepository)
+const mealcontroller = new mealController(mealservice)
 
 
 app.get('/', (req, res) => {
     res.send("Hello world");
 });
 
-app.get('/test', (req, res) => {
-    res.send(mealservice.Test())
-});
+app.get('/meals',mealcontroller.getMeal);
 
-app.get('/meals', async (req, res) => {
-    const meals = await mealservice.getMeals()
-    //res.status(200).json(meals);
-    res.status(200).send("OK");
-});
+app.get('/menu', mealcontroller.getMenu);
 
-app.post('/meals', async (req, res) => {
-    mealservice.addMeal(req.body)
-    //console.log(req.body);
-    res.send("ok");
-});
+app.post('/meals', mealcontroller.postMeal);
 
-app.get('/menu', async (req, res) => {
-    const menu = await mealservice.getMenu()
-    res.json(menu);
-});
-
-app.put('/meals/:id',(req,res)=>{
-    mealservice.updateMeal(req.params.id,req.body.quantity)
-    res.send("Meal Update")
-})
+app.put('/meals/:id',mealcontroller.updateMeal)
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
