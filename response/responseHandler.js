@@ -7,6 +7,8 @@ class ResponseHandler {
     getMealsEmpty = () => "Il semble ne pas avoir de plats"
 
     getMenusEmpty = () => "Il semble ne pas avoir de menus"
+
+    postSeatingPlanOk = () => "Seating plan successfully added"
 }
 
 
