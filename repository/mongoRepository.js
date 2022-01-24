@@ -1,5 +1,6 @@
 let Meal = require('../repository/models/mealSchema')
 const responseHandler = require('../response/responseHandler')
+const SeatingPlan = require('./models/seatingPlanSchema')
 
 class mongoRepository {
     constructor() { }
@@ -49,6 +50,21 @@ class mongoRepository {
 
     async mealExist(name){
         return await Meal.exists({name : name})
+    }
+
+    async addOneSeatingPlan(newSeatingPlan){
+        const seatingPlan = new SeatingPlan({
+            tableList: newSeatingPlan.tableList,
+        })
+        try{
+            await seatingPlan.save()
+            console.log(seatingPlan._id)
+            await SeatingPlan.updateMany({'_id':{$ne:seatingPlan._id}},{$set:{"seatingPlanStatus":false}})
+        }catch(err) {
+            return err.name
+        }
+        
+        return responseHandler.postSeatingPlanOk() 
     }
 }
 
