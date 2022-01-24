@@ -20,7 +20,7 @@ app.get('/menu', mealcontroller.getMenu);
 
 app.post('/meals', mealcontroller.postMeal);
 
-app.put('/meals/:id',mealcontroller.updateMeal)
+app.patch('/meals/:id',mealcontroller.updateMeal)
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
