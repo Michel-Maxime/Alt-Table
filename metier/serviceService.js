@@ -3,8 +3,8 @@ class serviceService {
         this.repo = repo
     }
 
-    async addService(newService) {
-        return await this.repo.addOneService(newService)
+    async addService() {
+        return await this.repo.addOneService()
     }
 }
 

@@ -4,12 +4,16 @@ const { findOne } = require('./mealSchema')
 
 const ServiceSchema = mongoose.Schema({
     seatingPlanSchemaId: {
-        type: Number,
+        type: String,
         required: true
     },
-    timestamps: true
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    versionKey: false // You should be aware of the outcome after set to false
 })
 
-let Service = mongoose.model("service", ServiceSchema)
+let Service = mongoose.model("services", ServiceSchema)
 
 module.exports = Service

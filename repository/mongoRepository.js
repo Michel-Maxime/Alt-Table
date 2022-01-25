@@ -68,11 +68,17 @@ class mongoRepository {
         return responseHandler.postSeatingPlanOk()
     }
 
-    async addOneService(newService) {
+    async addOneService() {
+        const seatingPlanId = await SeatingPlan.find({}, '_id').where('seatingPlanStatus').equals(true)
         const service = new Service({
-            seatingPlanSchemaId: // récupérer l'id du plan de table dont le status est à true
+            seatingPlanSchemaId: seatingPlanId[0]._id
         })
-
+        try {
+            await service.save();
+        } catch (err) {
+            return err.name
+        }
+        return responseHandler.postServiceOk()
     }
 }
 
