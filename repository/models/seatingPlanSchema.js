@@ -11,7 +11,7 @@ const TableSchema = mongoose.Schema({
     },
     available:{
         type: Boolean,
-        required: true,
+        default:true
     },
     nbClients:{
         type: Number,
