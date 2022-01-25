@@ -1,8 +1,12 @@
+const { response } = require('express')
+// const Service = require('../models/serviceSchema')
+
 const { serviceService } = require('../metier/serviceService')
 let Meal = require('../repository/models/mealSchema')
 const responseHandler = require('../response/responseHandler')
 const SeatingPlan = require('./models/seatingPlanSchema')
 const Service = require('./models/serviceSchema')
+
 
 class mongoRepository {
     constructor() { }
@@ -105,28 +109,17 @@ class mongoRepository {
         }
     }
  
-    async getTable(numTable){
-        try {
-            return await SeatingPlan.find({
-                tableNumero: {$e: numTable},
-            })
-        }catch(err) {
-            return err.name
-        } 
-    }
-
     async tableIsAvailable(numTable){
         try {
-            console.log(await SeatingPlan.findOne(
-                {
-                tableNumero: numTable,
-                available: true,
-                }
-            ))
-            return await SeatingPlan.findOne({
-                tableNumero: numTable,
-                available: true,
-            })
+            const serviceOn = await SeatingPlan.find({seatingPlanStatus:true})
+            const found = serviceOn[0].tableList.find(element => element.tableNumero == numTable);
+            console.log(found)
+            if (found===undefined){
+                console.log("Je suis dedans")
+                return "This table doesn't exist"
+            }else{
+                return found.available
+            }
         }catch(err) {
             return err.name
         } 
@@ -134,9 +127,7 @@ class mongoRepository {
 
     async getServiceAvailable(){
         try {
-            return await Services.findOne({
-                serviceStatus: true,
-            })
+            return true // ajouter le schéma du Service de Jordan
         }catch(err) {
             return err.name
         } 
@@ -144,16 +135,15 @@ class mongoRepository {
 
     async addClientsToTable(bodyrequest){
         try {
-            return await SeatingPlan.findOneAndUpdate({
-                tableNumero: {$eq: bodyrequest.tableNumero},
-                available: {$eq: true },
-                maxClient : {$gt: bodyrequest.nbClients},
-            },{
-                nbClients: bodyrequest.nbClients,
-            })
+            const serviceOn = await SeatingPlan.find({seatingPlanStatus:true})
+            const found = serviceOn[0].tableList.find(element => element == bodyrequest.tableNumero);
+            found.nbClients = bodyrequest.nbClients
+            found.available = false
+            const up = await serviceOn[0].save()
         }catch(err) {
             return err.name
         }
+        return responseHandler.postAddClientOk() 
     }
 
 }

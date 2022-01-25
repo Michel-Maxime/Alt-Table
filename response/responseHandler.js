@@ -16,6 +16,9 @@ class ResponseHandler {
 
     addClientsOk = () => "Clients are successfull installed"
 
+    postAddClientOk  = () => "Clients are installed to their table"
+
+    tableDoesntExist  = () => "This table doesn't exist"
 }
 
 
