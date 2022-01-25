@@ -11,6 +11,8 @@ class ResponseHandler {
     postSeatingPlanOk = () => "Seating plan successfully added"
 
     postServiceOk = () => "Service created successfully"
+
+    patchServiceOk = () => "Service ended successfully"
 }
 
 

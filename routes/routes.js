@@ -37,6 +37,8 @@ app.post('/seatingplan',seatingplancontroller.postSeatingPlan)
 
 app.post('/service', servicecontroller.postService)
 
+app.patch('/service/:id', servicecontroller.endService)
+
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
 });

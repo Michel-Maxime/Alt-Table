@@ -1,3 +1,4 @@
+const { serviceService } = require('../metier/serviceService')
 let Meal = require('../repository/models/mealSchema')
 const responseHandler = require('../response/responseHandler')
 const SeatingPlan = require('./models/seatingPlanSchema')
@@ -69,18 +70,39 @@ class mongoRepository {
     }
 
     async addOneService() {
-        //Est-ce que je dois faire cette requete ailleurs (en amont)?
-        const seatingPlanId = await SeatingPlan.find({}, '_id').where('seatingPlanStatus').equals(true)
-        const service = new Service({
-            seatingPlanSchemaId: seatingPlanId[0]._id
-        })
         try {
+            const seatingPlanId = await SeatingPlan.find({}, '_id').where('seatingPlanStatus').equals(true)
+            const service = new Service({
+                seatingPlanSchemaId: seatingPlanId[0]._id
+            })
             await service.save();
             await Service.updateMany({ '_id': { $ne: service._id } }, { $set: { "serviceStatus": false } })
         } catch (err) {
             return err.name
         }
         return responseHandler.postServiceOk()
+    }
+
+    async serviceExist() {
+        try {
+            const serviceStatus = await Service.find({}).where('serviceStatus').equals(true)
+            if (Array.isArray(serviceStatus) && serviceStatus.length) {
+                return true
+            } else {
+                return false
+            }
+        } catch (err) {
+            return err.name
+        }
+
+    }
+
+    async endService() {
+        try {
+            await Meal.findByIdAndUpdate(id, { $set: { serviceStatus: false } }, { new: true, upsert: true })
+        } catch (err) {
+            return err.name
+        }
     }
 }
 
