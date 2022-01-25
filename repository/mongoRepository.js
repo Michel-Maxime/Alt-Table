@@ -69,12 +69,14 @@ class mongoRepository {
     }
 
     async addOneService() {
+        //Est-ce que je dois faire cette requete ailleurs (en amont)?
         const seatingPlanId = await SeatingPlan.find({}, '_id').where('seatingPlanStatus').equals(true)
         const service = new Service({
             seatingPlanSchemaId: seatingPlanId[0]._id
         })
         try {
             await service.save();
+            await Service.updateMany({ '_id': { $ne: service._id } }, { $set: { "serviceStatus": false } })
         } catch (err) {
             return err.name
         }
