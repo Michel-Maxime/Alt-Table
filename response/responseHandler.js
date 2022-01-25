@@ -13,6 +13,9 @@ class ResponseHandler {
     postServiceOk = () => "Service created successfully"
 
     patchServiceOk = () => "Service ended successfully"
+
+    addClientsOk = () => "Clients are successfull installed"
+
 }
 
 

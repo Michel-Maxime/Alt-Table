@@ -9,6 +9,14 @@ const TableSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    available:{
+        type: Boolean,
+        required: true,
+    },
+    nbClients:{
+        type: Number,
+        default: 0,
+    }
 })
 
 const SeatingPlanSchema = mongoose.Schema({

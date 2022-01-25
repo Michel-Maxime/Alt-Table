@@ -7,8 +7,13 @@ const {mealController} = require('../controller/mealController')
 const {seatingPlanService} = require('../metier/seatingPlanService')
 const {seatingPlanController} = require('../controller/seatingPlanController')
 
+
 const {serviceService} = require('../metier/serviceService')
 const {serviceController} = require('../controller/serviceController')
+
+const {clientController} = require('../controller/clientController')
+const {clientService} = require('../metier/clientService')
+
 
 const mongorepository = new mongoRepository()
 const mealservice = new mealService(mongorepository)
@@ -17,8 +22,13 @@ const mealcontroller = new mealController(mealservice)
 const seatingplanservice = new seatingPlanService(mongorepository)
 const seatingplancontroller = new seatingPlanController(seatingplanservice)
 
+
 const serviceservice = new serviceService(mongorepository)
 const servicecontroller = new serviceController(serviceservice)
+
+
+const clientservice = new clientService(mongorepository)
+const clientcontroller = new clientController(clientservice)
 
 
 app.get('/', (req, res) => {
@@ -38,6 +48,8 @@ app.post('/seatingplan',seatingplancontroller.postSeatingPlan)
 app.post('/service', servicecontroller.postService)
 
 app.patch('/service/:id', servicecontroller.endService)
+
+app.post('/clients', clientcontroller.postClient)
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);

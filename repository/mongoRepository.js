@@ -104,6 +104,58 @@ class mongoRepository {
             return err.name
         }
     }
+ 
+    async getTable(numTable){
+        try {
+            return await SeatingPlan.find({
+                tableNumero: {$e: numTable},
+            })
+        }catch(err) {
+            return err.name
+        } 
+    }
+
+    async tableIsAvailable(numTable){
+        try {
+            console.log(await SeatingPlan.findOne(
+                {
+                tableNumero: numTable,
+                available: true,
+                }
+            ))
+            return await SeatingPlan.findOne({
+                tableNumero: numTable,
+                available: true,
+            })
+        }catch(err) {
+            return err.name
+        } 
+    }
+
+    async getServiceAvailable(){
+        try {
+            return await Services.findOne({
+                serviceStatus: true,
+            })
+        }catch(err) {
+            return err.name
+        } 
+    }
+
+    async addClientsToTable(bodyrequest){
+        try {
+            return await SeatingPlan.findOneAndUpdate({
+                tableNumero: {$eq: bodyrequest.tableNumero},
+                available: {$eq: true },
+                maxClient : {$gt: bodyrequest.nbClients},
+            },{
+                nbClients: bodyrequest.nbClients,
+            })
+        }catch(err) {
+            return err.name
+        }
+    }
+
 }
 
 module.exports = { mongoRepository }
