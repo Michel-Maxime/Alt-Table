@@ -9,6 +9,8 @@ class ResponseHandler {
     getMenusEmpty = () => "Il semble ne pas avoir de menus"
 
     postSeatingPlanOk = () => "Seating plan successfully added"
+
+    addClientsOk = () => "Clients are successfull installed"
 }
 
 
