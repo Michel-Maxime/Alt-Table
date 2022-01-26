@@ -27,6 +27,14 @@ class mealService {
         return menu
     }
 
+    async deleteMealByName(name){
+        if(await this.repo.mealExist(name)){
+            return await this.repo.mealIsDelete(name)
+        }else{
+            return "Can't delete a meal wich doesn't exist"
+        }
+    }
+
 }
 
 module.exports = {

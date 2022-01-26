@@ -55,7 +55,20 @@ class mongoRepository {
     }
 
     async mealExist(name) {
-        return await Meal.exists({ name: name })
+        try{
+            return await Meal.exists({ name: name })
+        }catch(err){
+            return err.name
+        }
+    }
+
+    async mealIsDelete(name) {
+        try{
+            await Meal.findOneAndDelete({ name: name })
+        }catch(err){
+            return err.name
+        }
+        return responseHandler.deleteMealOk()
     }
 
     async addOneSeatingPlan(newSeatingPlan) {
