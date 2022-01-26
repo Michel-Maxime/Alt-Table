@@ -54,10 +54,3 @@ describe("Meals Routes", () => {
     })
 
 })
-
-describe("Menu Routes", () => {
-    it('test /menu GET', async () => {
-        const res = await request("localhost:8000").get('/menu');
-        expect(res.status).toBe(200)
-    });
-}) 
