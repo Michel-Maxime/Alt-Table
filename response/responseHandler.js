@@ -6,6 +6,8 @@ class ResponseHandler {
 
     getMealsEmpty = () => "Il semble ne pas avoir de plats"
 
+    deleteMealOk = () => "Meal successfully delete"
+
     getMenusEmpty = () => "Il semble ne pas avoir de menus"
 
     postSeatingPlanOk = () => "Seating plan successfully added"
@@ -16,6 +18,9 @@ class ResponseHandler {
 
     addClientsOk = () => "Clients are successfull installed"
 
+    postAddClientOk  = () => "Clients are installed to their table"
+
+    tableDoesntExist  = () => "This table doesn't exist"
 }
 
 

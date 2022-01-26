@@ -9,6 +9,8 @@ const {mealController} = require('../controller/mealController')
 const {seatingPlanService} = require('../metier/seatingPlanService')
 const {seatingPlanController} = require('../controller/seatingPlanController')
 
+const {menuService} = require('../metier/menuService')
+const {menuController} = require('../controller/menuController')
 
 const {serviceService} = require('../metier/serviceService')
 const {serviceController} = require('../controller/serviceController')
@@ -20,6 +22,9 @@ const {clientService} = require('../metier/clientService')
 const mongorepository = new mongoRepository()
 const mealservice = new mealService(mongorepository)
 const mealcontroller = new mealController(mealservice)
+
+const menuservice = new menuService(mongorepository)
+const menucontroller = new menuController(menuservice)
 
 const seatingplanservice = new seatingPlanService(mongorepository)
 const seatingplancontroller = new seatingPlanController(seatingplanservice)
@@ -39,11 +44,13 @@ app.get('/', (req, res) => {
 
 app.get('/meals',mealcontroller.getMeal);
 
-app.get('/menu', mealcontroller.getMenu);
+app.delete('/meals/:name',mealcontroller.deleteMeal)
+
+app.get('/menu', menucontroller.getMenu);
 
 app.post('/meals', mealcontroller.postMeal);
 
-app.patch('/meals/:id',mealcontroller.updateMeal)
+app.patch('/meals/:name',mealcontroller.updateMeal)
 
 app.post('/seatingplan',seatingplancontroller.postSeatingPlan)
 

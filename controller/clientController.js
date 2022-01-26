@@ -7,16 +7,14 @@ class clientController {
 
     postClient = async (req, res) => {
         let response = await this.service.installClients(req.body)
-        res.status(200).send("OK");
-        /*const clients = await this.service.getClients()
-        const table = await this.service.getTable(this.response.tableNumero)
-        const service = await this.service.getService()
-        if (table.available && service.isOn && (clients.numclient > 0) && (clients.numclient <= table.maxClient)) {
-            res.status(200).send("OK");
+        if (response == responseHandler.postAddClientOk()){
+            res.status(200).send(responseHandler.postAddClientOk());
         }
-        else{
-            res.status(500).send("Error");
-        }*/
+        else if(response==responseHandler.tableDoesntExist()){
+            res.status(404).json(response)
+        }else{
+            res.status(400).json(response)
+        }
     }
 }
 module.exports = {

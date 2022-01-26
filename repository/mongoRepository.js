@@ -1,8 +1,12 @@
+const { response } = require('express')
+// const Service = require('../models/serviceSchema')
+
 const { serviceService } = require('../metier/serviceService')
 let Meal = require('../repository/models/mealSchema')
 const responseHandler = require('../response/responseHandler')
 const SeatingPlan = require('./models/seatingPlanSchema')
 const Service = require('./models/serviceSchema')
+
 
 class mongoRepository {
     constructor() { }
@@ -40,9 +44,9 @@ class mongoRepository {
         return responseHandler.postOk()
     }
 
-    async updateOneMeal(id, quantity) {
+    async updateOneMeal(name, quantity) {
         try {
-            await Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true })
+            await Meal.updateOne({name:name},{ quantity: quantity })
         } catch (err) {
             return err.name
         }
@@ -51,7 +55,20 @@ class mongoRepository {
     }
 
     async mealExist(name) {
-        return await Meal.exists({ name: name })
+        try{
+            return await Meal.exists({ name: name })
+        }catch(err){
+            return err.name
+        }
+    }
+
+    async mealIsDelete(name) {
+        try{
+            await Meal.findOneAndDelete({ name: name })
+        }catch(err){
+            return err.name
+        }
+        return responseHandler.deleteMealOk()
     }
 
     async addOneSeatingPlan(newSeatingPlan) {
@@ -105,55 +122,31 @@ class mongoRepository {
         }
     }
  
-    async getTable(numTable){
-        try {
-            return await SeatingPlan.find({
-                tableNumero: {$e: numTable},
-            })
-        }catch(err) {
-            return err.name
-        } 
-    }
-
     async tableIsAvailable(numTable){
         try {
-            console.log(await SeatingPlan.findOne(
-                {
-                tableNumero: numTable,
-                available: true,
-                }
-            ))
-            return await SeatingPlan.findOne({
-                tableNumero: numTable,
-                available: true,
-            })
+            const serviceOn = await SeatingPlan.find({seatingPlanStatus:true})
+            const found = serviceOn[0].tableList.find(element => element.tableNumero == numTable);
+            if (found===undefined){
+                return found
+            }else{
+                return found.available
+            }
         }catch(err) {
-            return err.name
-        } 
-    }
-
-    async getServiceAvailable(){
-        try {
-            return await Services.findOne({
-                serviceStatus: true,
-            })
-        }catch(err) {
-            return err.name
+            return err
         } 
     }
 
     async addClientsToTable(bodyrequest){
         try {
-            return await SeatingPlan.findOneAndUpdate({
-                tableNumero: {$eq: bodyrequest.tableNumero},
-                available: {$eq: true },
-                maxClient : {$gt: bodyrequest.nbClients},
-            },{
-                nbClients: bodyrequest.nbClients,
-            })
+            const serviceOn = await SeatingPlan.find({seatingPlanStatus:true})
+            const found = serviceOn[0].tableList.find(element => element.tableNumero == bodyrequest.tableNumero);
+            found.nbClients = bodyrequest.nbClients
+            found.available = false
+        await serviceOn[0].save()
         }catch(err) {
             return err.name
         }
+        return responseHandler.postAddClientOk() 
     }
 
 }
