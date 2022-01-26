@@ -113,33 +113,23 @@ class mongoRepository {
         try {
             const serviceOn = await SeatingPlan.find({seatingPlanStatus:true})
             const found = serviceOn[0].tableList.find(element => element.tableNumero == numTable);
-            console.log(found)
             if (found===undefined){
-                console.log("Je suis dedans")
-                return "This table doesn't exist"
+                return found
             }else{
                 return found.available
             }
         }catch(err) {
-            return err.name
-        } 
-    }
-
-    async getServiceAvailable(){
-        try {
-            return true // ajouter le schéma du Service de Jordan
-        }catch(err) {
-            return err.name
+            return err
         } 
     }
 
     async addClientsToTable(bodyrequest){
         try {
             const serviceOn = await SeatingPlan.find({seatingPlanStatus:true})
-            const found = serviceOn[0].tableList.find(element => element == bodyrequest.tableNumero);
+            const found = serviceOn[0].tableList.find(element => element.tableNumero == bodyrequest.tableNumero);
             found.nbClients = bodyrequest.nbClients
             found.available = false
-            const up = await serviceOn[0].save()
+        await serviceOn[0].save()
         }catch(err) {
             return err.name
         }

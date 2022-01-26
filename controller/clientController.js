@@ -11,7 +11,7 @@ class clientController {
             res.status(200).send(responseHandler.postAddClientOk());
         }
         else if(response==responseHandler.tableDoesntExist()){
-            res.status(400).json(response) //voir code réponse HTTP pour une erreur du front
+            res.status(404).json(response)
         }else{
             res.status(400).json(response)
         }
