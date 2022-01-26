@@ -48,7 +48,7 @@ app.get('/menu', menucontroller.getMenu);
 
 app.post('/meals', mealcontroller.postMeal);
 
-app.patch('/meals/:id',mealcontroller.updateMeal)
+app.patch('/meals/:name',mealcontroller.updateMeal)
 
 app.post('/seatingplan',seatingplancontroller.postSeatingPlan)
 

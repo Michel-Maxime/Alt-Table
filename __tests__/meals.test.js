@@ -2,28 +2,49 @@ const request = require('supertest')
 
 describe("Meals Routes", () => {
 
-    it('test /meals GET', async () => {
+    it('GET /meals should return 200 response', async () => {
         const res = await request("localhost:8000").get('/meals');
         expect(res.status).toBe(200)
     });
 
-    it('test /meals POST', async () => {
+    it('POST /meals should return 200 response', async () => {
         const res = await request("localhost:8000")
             .post("/meals")
             .send(
                 {
-                    name: 'Added Meal 56',
-                    description: 'Id test meal',
-                    type: 'plat principal',
+                    name: 'Jest meal',
+                    description: 'Jest meal',
+                    type: 'plat',
+                    price: 15
+                }
+            )
+        expect(res.status).toBe(200);
+    })
+
+    it('POST /meals duplicate should return 400 response', async () => {
+        const res = await request("localhost:8000")
+            .post("/meals")
+            .send(
+                {
+                    name: 'Jest meal',
+                    description: 'Jest meal',
+                    type: 'plat',
                     price: 15
                 }
             )
         expect(res.status).toBe(400);
     })
 
-    it('test /meals PUT', async () => {
+    it('DELETE /meals/Jest meal should return 200 response', async () => {
         const res = await request("localhost:8000")
-            .put("/meals/61e97f18e34305a0c9fcf4be")
+            .delete("/meals/Jest meal")
+            .send()
+        expect(res.status).toBe(200);
+    })
+
+    it('PATCH /meals/Jest meal should return 200 response', async () => {
+        const res = await request("localhost:8000")
+            .patch("/meals/Jest meal")
             .send(
                 {
                     quantity: 10

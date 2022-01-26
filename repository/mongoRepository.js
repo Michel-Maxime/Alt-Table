@@ -44,9 +44,9 @@ class mongoRepository {
         return responseHandler.postOk()
     }
 
-    async updateOneMeal(id, quantity) {
+    async updateOneMeal(name, quantity) {
         try {
-            await Meal.findByIdAndUpdate(id, { $set: { quantity: quantity } }, { new: true, upsert: true })
+            await Meal.updateOne({name:name},{ quantity: quantity })
         } catch (err) {
             return err.name
         }

@@ -18,8 +18,8 @@ class mealService {
         return await this.repo.addOneMeal(newMeal)
     }
 
-    async updateMeal(id, quantity) {
-        return await this.repo.updateOneMeal(id, quantity)
+    async updateMeal(name, quantity) {
+        return await this.repo.updateOneMeal(name, quantity)
     }
 
     async deleteMealByName(name){
