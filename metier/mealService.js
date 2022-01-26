@@ -22,11 +22,6 @@ class mealService {
         return await this.repo.updateOneMeal(id, quantity)
     }
 
-    async getMenu() {
-        let menu = await this.repo.getMenu()
-        return menu
-    }
-
     async deleteMealByName(name){
         if(await this.repo.mealExist(name)){
             return await this.repo.mealIsDelete(name)
