@@ -23,6 +23,10 @@ class ResponseHandler {
     postAddClientOk  = () => "Clients are installed to their table"
 
     tableDoesntExist  = () => "This table doesn't exist"
+
+    postOrderOK = () => "your order is being prepared !!"
+
+    tableNotAvaible = () => "It is not possible to order at this table"
 }
 
 

@@ -16,7 +16,9 @@ const {serviceService} = require('../metier/serviceService')
 const {serviceController} = require('../controller/serviceController')
 
 const {clientController} = require('../controller/clientController')
-const {clientService} = require('../metier/clientService')
+const {clientService} = require('../metier/clientService');
+const { orderController } = require('../controller/orderController');
+const { orderService } = require('../metier/orderService');
 
 
 const mongorepository = new mongoRepository()
@@ -33,9 +35,11 @@ const seatingplancontroller = new seatingPlanController(seatingplanservice)
 const serviceservice = new serviceService(mongorepository)
 const servicecontroller = new serviceController(serviceservice)
 
-
 const clientservice = new clientService(mongorepository)
 const clientcontroller = new clientController(clientservice)
+
+const orderservice = new orderService(mongorepository)
+const ordercontroller = new orderController(orderservice)
 
 
 app.get('/', (res) => {
@@ -60,13 +64,14 @@ app.patch('/service/:id', servicecontroller.endService)
 
 app.post('/clients', clientcontroller.postClient)
 
+
+app.post('/order', ordercontroller.takeOrder)
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
 });
-
-
 
 
 

@@ -3,6 +3,8 @@ const responseHandler = require('../response/responseHandler')
 const SeatingPlan = require('./models/seatingPlanSchema')
 const Service = require('./models/serviceSchema')
 
+const Order = require('./models/orderShema')
+
 
 class mongoRepository {
     constructor() { }
@@ -143,6 +145,29 @@ class mongoRepository {
             return err.name
         }
         return responseHandler.postAddClientOk() 
+    }
+
+    async getTableAvaible(number){
+        try{
+            const serviceOn = await SeatingPlan.findOne({seatingPlanStatus:true})
+            const table = serviceOn.tableList.find(tbl => tbl.tableNumero == number);
+            return table ? true : false; 
+        }catch(err){
+            console.log(err.name);
+            return false
+        }
+    }
+
+    async addOrder(order){
+        try{
+            const newOrder = new Order({
+                order: order
+            })
+            await newOrder.save()
+            return responseHandler.postOrderOK()         
+        }catch(err){
+            return err.name
+        }
     }
 
 }
