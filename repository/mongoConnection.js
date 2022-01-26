@@ -9,7 +9,7 @@ mongoose.connect(url,{
 
 
 mongoose.connection.once('open', function () {
-    console.log('Connection has been made');
+    // console.log('Connection has been made');
   }).on('error', function (error) {
     console.log('Connect error', error);
   }).on('disconnected', function () {
