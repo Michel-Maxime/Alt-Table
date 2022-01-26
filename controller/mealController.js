@@ -50,6 +50,16 @@ class mealController {
             res.status(500).json(response);
         }
     }
+
+    deleteMeal = async (req, res) => {
+        let response = await this.service.deleteMealByName(req.params.name)
+        if (response == responseHandler.deleteMealOk()) {
+            res.status(200).json(response);
+        }
+        else {
+            res.status(500).json(response);
+        }
+    }
 }
 
 module.exports = {

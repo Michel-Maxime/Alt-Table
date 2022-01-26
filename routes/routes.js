@@ -37,6 +37,8 @@ app.get('/', (req, res) => {
 
 app.get('/meals',mealcontroller.getMeal);
 
+app.delete('/meals/:name',mealcontroller.deleteMeal)
+
 app.get('/menu', mealcontroller.getMenu);
 
 app.post('/meals', mealcontroller.postMeal);
