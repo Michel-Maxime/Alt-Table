@@ -1,4 +1,6 @@
 const {app,port} = require('../config/server')
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSON = require("../swagger.json");
 
 const {mongoRepository} = require('../repository/mongoRepository')
 const {mealService} = require('../metier/mealService')
@@ -57,6 +59,8 @@ app.post('/service', servicecontroller.postService)
 app.patch('/service/:id', servicecontroller.endService)
 
 app.post('/clients', clientcontroller.postClient)
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
 
 app.listen(port, () => {
     console.log('Running on http://localhost:' + port);
