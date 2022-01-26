@@ -1,7 +1,3 @@
-const { response } = require('express')
-// const Service = require('../models/serviceSchema')
-
-const { serviceService } = require('../metier/serviceService')
 let Meal = require('../repository/models/mealSchema')
 const responseHandler = require('../response/responseHandler')
 const SeatingPlan = require('./models/seatingPlanSchema')

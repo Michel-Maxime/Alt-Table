@@ -1,22 +1,24 @@
 class ResponseHandler {
 
-    postOk = () => "meal successfully added"
+    postMealOk = () => "Meal successfully added"
 
-    patchOk = () => "meal successfully updated"
+    mealAlreadyExist = () => "Meal already exist with this name"
 
-    getMealsEmpty = () => "Il semble ne pas avoir de plats"
+    patchMealOk = () => "Meal successfully updated"
 
-    deleteMealOk = () => "Meal successfully delete"
+    getMealsEmpty = () => "There is no meals"
 
-    getMenusEmpty = () => "Il semble ne pas avoir de menus"
+    deleteMealOk = () => "Meal successfully deleted"
+
+    getMenusEmpty = () => "There is no menu available"
 
     postSeatingPlanOk = () => "Seating plan successfully added"
 
-    postServiceOk = () => "Service created successfully"
+    postServiceOk = () => "Service successfully created"
 
-    patchServiceOk = () => "Service ended successfully"
+    patchServiceOk = () => "Service successfully ended"
 
-    addClientsOk = () => "Clients are successfull installed"
+    addClientsOk = () => "Clients successfully installed"
 
     postAddClientOk  = () => "Clients are installed to their table"
 

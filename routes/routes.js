@@ -38,11 +38,11 @@ const clientservice = new clientService(mongorepository)
 const clientcontroller = new clientController(clientservice)
 
 
-app.get('/', (req, res) => {
+app.get('/', (res) => {
     res.send("Hello world");
 });
 
-app.get('/meals',mealcontroller.getMeal);
+app.get('/meals',mealcontroller.getMeals);
 
 app.delete('/meals/:name',mealcontroller.deleteMeal)
 
