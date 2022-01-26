@@ -5,7 +5,7 @@ class mealController {
         this.service = service
     }
 
-    getMeal = async (req, res) => {
+    getMeals = async (res) => {
         const meals = await this.service.getMeals()
 
         if (meals.length != 0 && Array.isArray(meals)) {
@@ -20,7 +20,7 @@ class mealController {
 
     postMeal = async (req, res) => {
         let response = await this.service.addMeal(req.body)
-        if (response == responseHandler.postOk()) {
+        if (response == responseHandler.postMealOk()) {
             res.status(200).json(response);
         }
         else {
@@ -30,7 +30,7 @@ class mealController {
 
     updateMeal = async (req, res) => {
         let response = await this.service.updateMeal(req.params.name, req.body.quantity)
-        if (response == responseHandler.patchOk()) {
+        if (response == responseHandler.patchMealOk()) {
             res.status(200).json(response);
         }
         else {

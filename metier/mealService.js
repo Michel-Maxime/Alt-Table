@@ -1,5 +1,3 @@
-const { exists } = require("../repository/models/mealSchema")
-
 class mealService {
     constructor(repo) {
         this.repo = repo
@@ -13,7 +11,7 @@ class mealService {
     async addMeal(newMeal){
         let isExist = await this.repo.mealExist(newMeal.name)
         if(isExist){
-            return "pas possible, le plat existe déja"
+            return "Meal already exist with this name"
         }
         return await this.repo.addOneMeal(newMeal)
     }
