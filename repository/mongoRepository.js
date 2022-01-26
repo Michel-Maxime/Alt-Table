@@ -37,7 +37,7 @@ class mongoRepository {
             return err.name
         }
 
-        return responseHandler.postOk()
+        return responseHandler.postMealOk()
     }
 
     async updateOneMeal(name, quantity) {
@@ -47,7 +47,7 @@ class mongoRepository {
             return err.name
         }
 
-        return responseHandler.patchOk()
+        return responseHandler.patchMealOk()
     }
 
     async mealExist(name) {

@@ -5,7 +5,7 @@ class mealController {
         this.service = service
     }
 
-    getMeals = async (res) => {
+    getMeals = async (req,res) => {
         const meals = await this.service.getMeals()
 
         if (meals.length != 0 && Array.isArray(meals)) {
