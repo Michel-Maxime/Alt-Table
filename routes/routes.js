@@ -64,7 +64,6 @@ app.patch('/service/:id', servicecontroller.endService)
 
 app.post('/clients', clientcontroller.postClient)
 
-
 app.post('/order', ordercontroller.takeOrder)
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerJSON));
