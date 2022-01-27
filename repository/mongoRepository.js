@@ -112,12 +112,13 @@ class mongoRepository {
 
     }
 
-    async endService() {
+    async endService(id) {
         try {
-            await Meal.findByIdAndUpdate(id, { $set: { serviceStatus: false } }, { new: true, upsert: true })
+            await Service.findOneAndUpdate({_id:id,serviceStatus:true}, { $set: { serviceStatus: false } }, { new: true, upsert: true })
         } catch (err) {
             return err.name
         }
+        return responseHandler.patchServiceOk()
     }
  
     async tableIsAvailable(numTable){
