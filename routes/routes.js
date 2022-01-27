@@ -42,7 +42,7 @@ const orderservice = new orderService(mongorepository)
 const ordercontroller = new orderController(orderservice)
 
 
-app.get('/', (res) => {
+app.get('/', (req,res) => {
     res.send("Hello world");
 });
 
